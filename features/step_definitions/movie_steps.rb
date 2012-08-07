@@ -34,6 +34,12 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   end
 end
 
-Then /^I should see all of the movies$/ do
-  assert_equal all('#movielist tr').length, Movie.count
+Then /^I should see (.*) of the movies$/ do |amount|
+  if amount == "none"
+    assert_equal all('#movielist tr').length, 0
+  elsif amount == "all"
+    assert_equal all('#movielist tr').length, Movie.count
+  else
+    assert_equal all('#movielist tr').length, amount
+  end
 end
